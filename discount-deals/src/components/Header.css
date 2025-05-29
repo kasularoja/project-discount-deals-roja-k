@@ -1,0 +1,16 @@
+.header {
+    background-color: black;
+    text-align: center;
+    padding: auto;
+    
+}
+
+.header nav a {
+    color: white;
+    margin: 5px;
+    text-decoration: wavy;
+}
+
+.header nav a:hover {
+    text-decoration: underline;
+}

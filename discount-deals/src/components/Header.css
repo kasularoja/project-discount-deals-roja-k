@@ -2,15 +2,27 @@
     background-color: black;
     text-align: center;
     padding: auto;
-    
-}
-
-.header nav a {
     color: white;
-    margin: 5px;
-    text-decoration: wavy;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+.header nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+ .header nav a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s, border-bottom 0.3s;
+    padding: 0.25rem 0.5rem;
+ }
 .header nav a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 2px solid;
+    color: lightgray;
+
 }

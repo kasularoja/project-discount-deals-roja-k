@@ -9,8 +9,10 @@
 body, html {
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: none;
   background-color: #f4f4f4;
   color: #222;
+  justify-content: center;
 }
 
 /* Main container: flex column layout, full viewport height */

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import DealList from './components/DealList';
@@ -7,6 +7,7 @@ import FilterBar from './components/FilterBar';
 import AdminForm from './components/AdminForm';
 import SearchSortBar from './components/SearchSortBar';
 import Login from './components/Login';
+import Favorites from './components/Favorites';
 import './App.css';
 
 function App() {
@@ -76,8 +77,20 @@ function App() {
   return (
     <div className="app">
       <Header />
+      
+      {/* Navigation Buttons */}
+      <div style={{ display: 'flex', gap: '10px', padding: '10px' }}>
+        <button onClick={() => navigate('/home')}>Home</button>
+        <button onClick={() => navigate('/favorites')}>
+          Favorites ({favorites.length})
+        </button>
+      </div>
+
       <Routes>
+        {/* Login route */}
         <Route path="/" element={<Login onLogin={handleLogin} />} />
+
+        {/* Main Deals Page */}
         <Route
           path="/home"
           element={
@@ -97,12 +110,25 @@ function App() {
                 onEdit={role === 'admin' ? setDealToEdit : null}
                 onDelete={role === 'admin' ? deleteDeal : null}
                 favorites={favorites}
-                toggleFavorite={role === 'user' ? toggleFavorite : null}
+                toggleFavorite={toggleFavorite}
               />
             </main>
           }
         />
+
+        {/* Favorites Page */}
+        <Route
+          path="/favorites"
+          element={
+            <Favorites
+              deals={deals}
+              favorites={favorites}
+              onFavorite={toggleFavorite}
+            />
+          }
+        />
       </Routes>
+
       <Footer />
     </div>
   );

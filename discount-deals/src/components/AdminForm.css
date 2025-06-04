@@ -1,13 +1,14 @@
 .admin-form {
     border: 1px solid dimgray;
-    padding: 1rem;
-    margin-top: 2rem;
+    padding: 0rem;
+    margin-top: 4rem;
     border-radius: 5px;
     background-color: rgb(149, 131, 131);
     color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    max-width: 100%;
+    max-width: 90%;
     box-sizing: border-box;
+    justify-content: center;
 }
 
 .admin-form select {
@@ -21,7 +22,7 @@
 }
 
 .admin-form button {
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1.2rem;
     background-color: dimgray;
     color: white;
     border: none;

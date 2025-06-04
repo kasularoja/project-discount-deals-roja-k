@@ -1,10 +1,11 @@
+import React from 'react';
 import './DealCard.css';
 
-function DealCard({ deal, isFavorite, onFavorite }) {
+function DealCard({ deal, isFavorite, onFavorite, onDelete }) {
   return (
     <div className={`deal-card ${isFavorite ? 'favorite' : ''}`}>
       <div className="deal-image">
-        <img src={deal.image || '/placeholder-deal.jpg'} alt={deal.title} />
+        
         {onFavorite && (
           <button 
             className="favorite-btn"
@@ -14,6 +15,10 @@ function DealCard({ deal, isFavorite, onFavorite }) {
             {isFavorite ? '❤️' : '🤍'}
           </button>
         )}
+        <button
+        className="delete-button"
+        onClick={() => onDelete(deal.id)}
+        ></button>
       </div>
       <div className="deal-info">
         <h3>{deal.title}</h3>

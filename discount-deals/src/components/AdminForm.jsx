@@ -13,7 +13,7 @@ export default function AdminForm() {
     const role = localStorage.getItem('role');
     if (role !== 'admin') {
       alert('Access denied: Admins only');
-      navigate('/login');
+      navigate('/login'); // Prevent access if not admin
     }
   }, [navigate]);
 
@@ -22,6 +22,7 @@ export default function AdminForm() {
     setDeals(savedDeals);
   }, []);
 
+  // Save updated deals to state and localStorage
   const saveDeals = (updated) => {
     setDeals(updated);
     localStorage.setItem('deals', JSON.stringify(updated));

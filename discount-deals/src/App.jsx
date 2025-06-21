@@ -14,10 +14,10 @@ import background from './assets/bg.jpg';
 import './App.css';
 
 function App() {
-  // ✅ Add state for role
+  // Add state for role
   const [role, setRole] = useState(localStorage.getItem('role'));
 
-  // ✅ Sync role state with localStorage changes
+  // Sync role state with localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
       setRole(localStorage.getItem('role'));
@@ -55,7 +55,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
 
-          {/* ✅ Conditional routing using role from state */}
+          {/* Conditional routing using role from state */}
           <Route
             path="/favorites"
             element={

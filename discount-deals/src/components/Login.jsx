@@ -8,6 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+// Handles login form submission
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -18,16 +19,16 @@ export default function Login() {
 
     if (role === 'admin' && username === 'admin' && password === 'admin123') {
   localStorage.setItem('role', 'admin');
-  localStorage.setItem('username', 'admin'); // ✅ Save username
-  navigate('/adminform');
+  localStorage.setItem('username', 'admin'); // Save username
+  navigate('/adminform'); // Redirect to admin form
 } else if (role === 'user' && username === 'user' && password === 'user123') {
   localStorage.setItem('role', 'user');
   localStorage.setItem('username', 'user');
-  navigate('/favorites');
+  navigate('/favorites'); // Redirect to favorites page
 } else if (role === 'guest') {
   localStorage.setItem('role', 'guest');
   localStorage.setItem('username', 'guest');
-  navigate('/');
+  navigate('/'); // Redirect guest to home
 }
 
   };

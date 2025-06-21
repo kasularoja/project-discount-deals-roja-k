@@ -1,39 +1,44 @@
-import { useEffect, useState } from 'react';
-import DealCard from './DealCard';
+import React, { useState, useEffect } from 'react';
 import './Favorites.css';
 
-function Favorites({ deals, favorites, onFavorite }) {
-  const [filteredDeals, setFilteredDeals] = useState([]);
+export default function Favorites() {
+  // Load favorites from localStorage or default to empty array
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
 
+  // Save favorites to localStorage whenever it changes
   useEffect(() => {
-    // Filter deals to only show favorited ones
-    const favDeals = deals.filter(deal => favorites.includes(deal.id));
-    setFilteredDeals(favDeals);
-  }, [deals, favorites]);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  // Remove deal from favorites by id
+  const removeFavorite = (id) => {
+    setFavorites(favorites.filter(deal => deal.id !== id));
+  };
+
+  if (favorites.length === 0) {
+    return (
+      <div className="favorites-container">
+        <h1>Your Favorite Deals</h1>
+        <p>You have no favorite deals saved yet.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="favorites-page">
-      <h2>Your Favorite Deals</h2>
-      
-      {filteredDeals.length > 0 ? (
-        <div className="favorites-grid">
-          {filteredDeals.map(deal => (
-            <DealCard
-              key={deal.id}
-              deal={deal}
-              isFavorite={true}
-              onFavorite={onFavorite}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="empty-state">
-          <p>You haven't saved any favorites yet!</p>
-          <p>Browse deals and click the ♥ icon to save them here.</p>
-        </div>
-      )}
+    <div className="favorites-container">
+      <h1>Your Favorite Deals</h1>
+      <ul className="favorites-list">
+        {favorites.map(deal => (
+          <li key={deal.id} className="favorite-item">
+            <h3>{deal.title}</h3>
+            <p>{deal.description}</p>
+            <button onClick={() => removeFavorite(deal.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-export default Favorites;

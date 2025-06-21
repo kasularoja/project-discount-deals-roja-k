@@ -1,0 +1,59 @@
+.about-form button,
+.back-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #e16309; /* Orange */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.about-form button:hover,
+.back-button:hover {
+  background-color: #cc5805; /* Darker orange on hover */
+}
+
+.about-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-form input,
+.about-form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #eaa15c; /* light orange border */
+  border-radius: 4px;
+  background-color: #fff4e6; /* very light orange background */
+  color: #333;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.about-form input:focus,
+.about-form textarea:focus {
+  outline: none;
+  border-color: #e16309; /* bright orange focus */
+  box-shadow: 0 0 4px #e16309;
+}
+
+.about-container {
+  background-color: #fff9f0;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 0 12px rgba(225, 99, 9, 0.3);
+  color: #333;  
+}
+
+.about-container h1,
+.about-container h2 {
+  color: #e16309;
+}

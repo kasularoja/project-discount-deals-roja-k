@@ -1,32 +1,19 @@
 import React from 'react';
-import './DealCard.css';
+import './DealList.css'; // or use DealCard.css if you'd like to separate styles
 
-function DealCard({ deal, isFavorite, onFavorite, onDelete }) {
+export default function DealCard({ deal, onFavorite, isFavorite, showButton }) {
   return (
-    <div className={`deal-card ${isFavorite ? 'favorite' : ''}`}>
-      <div className="deal-image">
-        
-        {onFavorite && (
-          <button 
-            className="favorite-btn"
-            onClick={() => onFavorite(deal.id)}
-            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-          >
-            {isFavorite ? '❤️' : '🤍'}
-          </button>
-        )}
+    <li className="deal-item">
+      <h3>{deal.title}</h3>
+      <p>{deal.description}</p>
+      {showButton && (
         <button
-        className="delete-button"
-        onClick={() => onDelete(deal.id)}
-        ></button>
-      </div>
-      <div className="deal-info">
-        <h3>{deal.title}</h3>
-        <p className="discount">{deal.discount}% OFF</p>
-        <p className="expiry">Expires: {new Date(deal.expiry).toLocaleDateString()}</p>
-      </div>
-    </div>
+          onClick={() => onFavorite(deal)}
+          disabled={isFavorite(deal.id)}
+        >
+          {isFavorite(deal.id) ? 'Added to Favorites' : 'Add to Favorites'}
+        </button>
+      )}
+    </li>
   );
 }
-
-export default DealCard;

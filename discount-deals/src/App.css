@@ -1,200 +1,90 @@
-/* Reset box-sizing, margin, and padding for all elements */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Basic styles for body and html */
-body, html {
-  height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: none;
-  background-color: #f4f4f4;
-  color: #222;
-  justify-content: center;
-}
-
-/* Main container: flex column layout, full viewport height */
+/* General layout */
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* full screen height */
-  width: 100%;
-  padding: 2vh 2vw; /* proportional padding */
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
 }
 
-/* Header styles */
+/* Header styling */
 .header {
-  background-color: black;
-  padding: 2vh;
-  color: white;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  font-size: 2vh;
+  background-color: #1e293b; /* Navy blue */
+  color: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 2.5vh;
+  font-size: 1.75rem;
+  color: #f97316; /* Warm orange */
 }
 
-.header nav {
+/* Navigation styling */
+.nav {
   display: flex;
-  justify-content: center;
-  margin-top: 1vh;
-  gap: 2vw;
-  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
 }
 
-.header nav a {
-  color: white;
-  font-weight: 500;
+.nav a {
+  color: #ffffff;
   text-decoration: none;
-  padding: 0.5vh 1vw;
-  font-size: 2vh;
+  font-weight: 500;
+  transition: color 0.3s, border-bottom 0.3s;
 }
 
-.header nav a:hover {
-  border-bottom: 0.2vh solid;
-  color: lightgray;
+.nav a:hover {
+  color: #f97316;
+  border-bottom: 2px solid #f97316;
 }
 
-/* Main content area: fill remaining space */
-.mainContent {
+/* Footer */
+.footer {
+  background-color: #1e293b;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+/* Main content */
+.main-content {
   flex: 1;
+  padding: 2rem;
+}
+
+.app {
+  position: relative;
+  z-index: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
-  padding: 2vh;
-  background-color: #1a1a1a;
-  color: #fff;
-  box-sizing: border-box;
-  width: 100%;
-  font-size: 2vh;
 }
 
-/* Footer styles */
-.footer {
-  width: 100%;
-  margin-top: 4vh; /* pushes footer down on large screens */
-  background-color: darkgray;
-  color: white;
-  padding: 2vh;
-  text-align: center;
-  font-size: 1.75vh;
-  border-top: 0.2vh solid #ccc;
+/* Background watermark layer */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('./assets/background.jpg'); /* ✅ src path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.07; /* ✅ Light watermark effect */
+  z-index: -1;
+  pointer-events: none;
 }
 
-/* Buttons */
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 0.5vh;
-  padding: 1vh 2vw;
-  font-size: 2vh;
-  transition: background 0.2s ease;
-}
 
-button:hover {
-  opacity: 0.8;
-}
-
-/* Search & filter bar styles */
-.search-sort-bar {
-  display: flex;
-  gap: 2vw;
-  margin-bottom: 2vh;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.search-sort-bar input,
-.search-sort-bar select {
-  padding: 1vh;
-  border-radius: 0.5vh;
-  border: 1px solid #ccc;
-  font-size: 2vh;
-  min-width: 30vw;
-  flex: 1;
-}
-
-/* Role selector styles */
-.role-selector {
-  display: flex;
-  gap: 2vw;
-  margin: 2vh 0;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.role-selector button {
-  background-color: #444;
-  color: white;
-  padding: 1vh 2vw;
-  border-radius: 0.5vh;
-  font-size: 2vh;
-}
-
-.role-selector button:hover {
-  background-color: #333;
-}
-
-.role-selector button.active {
-  background-color: #007bff;
-  color: white;
-}
-
-/* Responsive styles for tablets and mobile devices */
-@media (max-width: 1024px) {
-  .app {
-    padding: 2vh 4vw;
-  }
-  .header {
-    font-size: 2.5vh;
-  }
-  .header nav {
-    gap: 3vw;
-  }
-  .search-sort-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .search-sort-bar input,
-  .search-sort-bar select {
-    min-width: 100%;
-  }
-  .role-selector {
-    flex-direction: column;
-  }
-  .footer {
-    font-size: 2vh;
-    margin-top: 6vh;
-  }
-}
-
-@media (max-width: 768px) {
-  .app {
-    padding: 2vh 3vw;
-  }
-  .header {
-    font-size: 2vh;
-  }
-  .header nav {
-    gap: 4vw;
-  }
-  .search-sort-bar {
-    flex-direction: column;
-  }
-  .search-sort-bar input,
-  .search-sort-bar select {
-    min-width: 100%;
-  }
-  .role-selector {
-    flex-direction: column;
-  }
-  .footer {
-    font-size: 1.75vh;
-    margin-top: 8vh;
-  }
-}

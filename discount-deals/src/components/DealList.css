@@ -1,10 +1,38 @@
-.deal-List {
-    display: grid;
-    padding: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    box-sizing: border-box;
-    max-width: 1200px;
-    margin: 0 auto;
+.deal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
 
+.deal-table th,
+.deal-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e8c7a1;
+}
+
+.deal-table th {
+  background-color: #fbe9dd;
+  color: #e16309;
+}
+
+.deal-table td button {
+  padding: 0.4rem 0.8rem;
+  background-color: #e16309;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deal-table td button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.deal-table td button:hover:not(:disabled) {
+  background-color: #cc5805;
 }

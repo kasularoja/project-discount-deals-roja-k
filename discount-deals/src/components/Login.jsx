@@ -1,67 +1,79 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-function Login({ onLogin }) {
-  const [selectedRole, setSelectedRole] = useState(null);
+export default function Login() {
+  const [role, setRole] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleRoleClick = (role) => {
-    if (role === 'user') {
-      setSelectedRole('user');
-    } else {
-      // Directly login as admin or guest (no password)
-      onLogin(role);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    if (username === 'user' && password === 'user123') {
-      onLogin('user');
-    } else {
-      setError('Invalid username or password');
+
+    if (!role || (role !== 'guest' && (!username || !password))) {
+      alert('Please fill in all fields');
+      return;
     }
+
+    if (role === 'admin' && username === 'admin' && password === 'admin123') {
+  localStorage.setItem('role', 'admin');
+  localStorage.setItem('username', 'admin'); // ✅ Save username
+  navigate('/adminform');
+} else if (role === 'user' && username === 'user' && password === 'user123') {
+  localStorage.setItem('role', 'user');
+  localStorage.setItem('username', 'user');
+  navigate('/favorites');
+} else if (role === 'guest') {
+  localStorage.setItem('role', 'guest');
+  localStorage.setItem('username', 'guest');
+  navigate('/');
+}
+
   };
 
   return (
     <div className="login-container">
-      {selectedRole === 'user' ? (
-        <div>
-          <h2>User Login</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button type="submit">Login</button>
-          </form>
-          {error && <p className="error">{error}</p>}
-        </div>
-      ) : (
-        <div>
-          <h2>Select Role to Login</h2>
-          <div className="role-selector">
-            <button onClick={() => handleRoleClick('admin')}>Admin</button>
-            <button onClick={() => handleRoleClick('user')}>User</button>
-            <button onClick={() => handleRoleClick('guest')}>Guest</button>
-          </div>
-          <p className="note">* Only 'User' requires login (user / user123)</p>
-        </div>
-      )}
+      <h2>Login to Discount Deals</h2>
+      <form onSubmit={handleLogin}>
+        <label>
+          Role:
+          <select value={role} onChange={(e) => setRole(e.target.value)} required>
+            <option value="">Select role</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="guest">Guest</option>
+          </select>
+        </label>
+
+        {role !== 'guest' && (
+          <>
+            <label>
+              Username:
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username"
+                required
+              />
+            </label>
+
+            <label>
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+                required
+              />
+            </label>
+          </>
+        )}
+
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
-
-export default Login;

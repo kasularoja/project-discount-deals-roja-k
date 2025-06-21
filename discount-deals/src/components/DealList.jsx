@@ -1,70 +1,67 @@
-import { useState } from 'react';
-import DealCard from './DealCard';
-import SearchSortBar from './SearchSortBar';
-import FilterBar from './FilterBar';
+import React, { useState, useEffect } from 'react';
+import DealRow from './DealRow'; // ✅ Import reusable component
 import './DealList.css';
 
-function DealList({ deals, favorites, onFavorite, onEdit, onDelete }) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState('title');
-  const [selectedCategories, setSelectedCategories] = useState([]);
+export default function DealList() {
+  const [deals, setDeals] = useState([]);
+  const [role, setRole] = useState(() => localStorage.getItem('role'));
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const handleFilterChange = (category) => {
-    if (category === 'All') {
-      setSelectedCategories([]);
-    } else {
-      setSelectedCategories(prev =>
-        prev.includes(category) 
-          ? prev.filter(c => c !== category) 
-          : [...prev, category]
-      );
+  useEffect(() => {
+    const savedDeals = JSON.parse(localStorage.getItem('deals')) || [];
+    setDeals(savedDeals);
+  }, []);
+
+  useEffect(() => {
+    const updateRole = () => setRole(localStorage.getItem('role'));
+    window.addEventListener('storage', updateRole);
+    window.addEventListener('focus', updateRole);
+    return () => {
+      window.removeEventListener('storage', updateRole);
+      window.removeEventListener('focus', updateRole);
+    };
+  }, []);
+
+  const addToFavorites = (deal) => {
+    if (!favorites.find((fav) => fav.id === deal.id)) {
+      const updated = [...favorites, deal];
+      setFavorites(updated);
+      localStorage.setItem('favorites', JSON.stringify(updated));
     }
   };
 
-  const filteredDeals = deals
-    .filter(deal => 
-      selectedCategories.length === 0 || 
-      selectedCategories.includes(deal.category)
-    )
-    .filter(deal => 
-      deal.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      deal.description.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortOption === 'discount') return b.discount - a.discount;
-      if (sortOption === 'expiry') return new Date(a.expiry) - new Date(b.expiry);
-      return a.title.localeCompare(b.title);
-    });
+  const isFavorite = (dealId) => favorites.some((fav) => fav.id === dealId);
 
   return (
     <div className="deal-list-container">
-      <SearchSortBar 
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        sortOption={sortOption}
-        onSortChange={setSortOption}
-      />
-      
-      <FilterBar
-        categories={deals.map(deal => deal.category)}
-        selectedCategories={selectedCategories}
-        onFilterChange={handleFilterChange}
-      />
-      
-      <div className="deal-grid">
-        {filteredDeals.map(deal => (
-          <DealCard
-            key={deal.id}
-            deal={deal}
-            isFavorite={favorites.includes(deal.id)}
-            onFavorite={onFavorite}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
-        ))}
-      </div>
+      <h1>Available Deals</h1>
+      {deals.length === 0 ? (
+        <p>No deals available yet. Please check back later!</p>
+      ) : (
+        <table className="deal-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              {(role === 'user' || role === 'admin') && <th>Action</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {deals.map((deal) => (
+              <DealRow
+                key={deal.id}
+                deal={deal}
+                role={role}
+                isFavorite={isFavorite}
+                addToFavorites={addToFavorites}
+              />
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
-
-export default DealList;

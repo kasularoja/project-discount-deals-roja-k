@@ -1,0 +1,41 @@
+.home-container {
+  max-width: 700px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff9f0;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(225, 99, 9, 0.3);
+  color: #e16309;
+}
+
+.home-container h1 {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.home-container p {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #cc5805;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #e16309;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #cc5805;
+}

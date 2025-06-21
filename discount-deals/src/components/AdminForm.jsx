@@ -1,137 +1,79 @@
-import { useState, useEffect } from 'react';
-import './AdminForm.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function AdminForm({ dealToEdit, onAddDeal, onEditDeal }) {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    discount: '',
-    category: 'Food',
-    expiry: '',
-    image: ''
-  });
+export default function AdminForm() {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [deals, setDeals] = useState([]);
+  const navigate = useNavigate();
 
+  // Redirect if not admin
   useEffect(() => {
-    if (dealToEdit) {
-      setFormData({
-        title: dealToEdit.title,
-        description: dealToEdit.description,
-        discount: dealToEdit.discount,
-        category: dealToEdit.category,
-        expiry: dealToEdit.expiry.split('T')[0],
-        
-      });
-    } else {
-      setFormData({
-        title: '',
-        description: '',
-        discount: '',
-        category: 'Food',
-        expiry: '',
-        image: ''
-      });
+    const role = localStorage.getItem('role');
+    if (role !== 'admin') {
+      alert('Access denied: Admins only');
+      navigate('/login');
     }
-  }, [dealToEdit]);
+  }, [navigate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  // Load saved deals
+  useEffect(() => {
+    const savedDeals = JSON.parse(localStorage.getItem('deals')) || [];
+    setDeals(savedDeals);
+  }, []);
+
+  const saveDeals = (updated) => {
+    setDeals(updated);
+    localStorage.setItem('deals', JSON.stringify(updated));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dealData = {
-      ...formData,
-      discount: Number(formData.discount),
-      expiry: new Date(formData.expiry).toISOString(),
-      id: dealToEdit?.id || Date.now()
+    const newDeal = {
+      id: Date.now(),
+      title,
+      description,
     };
+    const updatedDeals = [...deals, newDeal];
+    saveDeals(updatedDeals);
+    setTitle('');
+    setDescription('');
+  };
 
-    if (dealToEdit) {
-      onEditDeal(dealData);
-    } else {
-      onAddDeal(dealData);
-    }
+  const handleDelete = (id) => {
+    const updated = deals.filter((deal) => deal.id !== id);
+    saveDeals(updated);
   };
 
   return (
     <div className="admin-form">
-      <h2>{dealToEdit ? 'Edit Deal' : 'Add New Deal'}</h2>
+      <h2>Admin Panel: Post New Deal</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
-        <div className="form-row">
-          <div className="form-group">
-            <label>Discount (%):</label>
-            <input
-              type="number"
-              name="discount"
-              min="1"
-              max="100"
-              value={formData.discount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Category:</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option value="Food">Food</option>
-              <option value="Fashion">Fashion</option>
-              <option value="Electronics">Electronics</option>
-              
-            </select>
-          </div>
-        </div>
-        
-        <div className="form-row">
-          <div className="form-group">
-            <label>Expiry Date:</label>
-            <input
-              type="date"
-              name="expiry"
-              value={formData.expiry}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          
-             
-            
-          
-        </div>
-        
-        <button type="submit">
-          {dealToEdit ? 'Update Deal' : 'Add Deal'}
-        </button>
+        <input
+          type="text"
+          placeholder="Deal title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="Deal description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+        <button type="submit">Post Deal</button>
       </form>
+
+      <h3>Existing Deals</h3>
+      <ul>
+        {deals.map((deal) => (
+          <li key={deal.id}>
+            <strong>{deal.title}</strong>: {deal.description}
+            <button onClick={() => handleDelete(deal.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-export default AdminForm;

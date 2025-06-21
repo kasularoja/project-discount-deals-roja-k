@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './Favorites.css';
 
 export default function Favorites() {
-  // Load favorites from localStorage or default to empty array
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('favorites');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Save favorites to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
-  // Remove deal from favorites by id
   const removeFavorite = (id) => {
     setFavorites(favorites.filter(deal => deal.id !== id));
   };
@@ -30,15 +27,26 @@ export default function Favorites() {
   return (
     <div className="favorites-container">
       <h1>Your Favorite Deals</h1>
-      <ul className="favorites-list">
-        {favorites.map(deal => (
-          <li key={deal.id} className="favorite-item">
-            <h3>{deal.title}</h3>
-            <p>{deal.description}</p>
-            <button onClick={() => removeFavorite(deal.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      <table className="favorites-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {favorites.map(deal => (
+            <tr key={deal.id}>
+              <td>{deal.title}</td>
+              <td>{deal.description}</td>
+              <td>
+                <button onClick={() => removeFavorite(deal.id)}>Remove</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

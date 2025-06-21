@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 
 
 export default defineConfig({
+  base: '/project-discount-deals-roja-k/',
   plugins: [react()],
-  base: "./",
-  
 })

@@ -1,5 +1,4 @@
-
-import DealRow from './DealRow'; // Import reusable component
+import React, { useState, useEffect } from 'react';
 import './DealList.css';
 
 export default function DealList() {
@@ -65,3 +64,4 @@ export default function DealList() {
     </div>
   );
 }
+  

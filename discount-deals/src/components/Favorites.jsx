@@ -8,14 +8,16 @@ export default function Favorites() {
   });
 
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('favorites', JSON.stringify(favorites)); // Save updated favorites back to localStorage
   }, [favorites]);
 
+  // Function to remove a deal from favorites
   const removeFavorite = (id) => {
-    setFavorites(favorites.filter(deal => deal.id !== id));
+    setFavorites(favorites.filter(deal => deal.id !== id)); // Keep only deals that don't match the given ID
   };
 
-  if (favorites.length === 0) {
+  // If no favorites are saved, show a message
+ if (favorites.length === 0) {
     return (
       <div className="favorites-container">
         <h1>Your Favorite Deals</h1>
@@ -24,6 +26,7 @@ export default function Favorites() {
     );
   }
 
+  // If there are favorites, show them in a table
   return (
     <div className="favorites-container">
       <h1>Your Favorite Deals</h1>

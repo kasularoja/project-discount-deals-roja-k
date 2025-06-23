@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { DealList } from './DealList';
 import DealRow from './DealRow'; // Import reusable component
 import './DealList.css';
 

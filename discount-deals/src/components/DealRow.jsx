@@ -1,5 +1,4 @@
-// src/components/DealRow.jsx
-import React from 'react';
+import { DealRow } from './DealRow';
 
 export default function DealRow({ deal, role, isFavorite, addToFavorites }) {
   return (

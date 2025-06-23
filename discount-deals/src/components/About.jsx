@@ -1,6 +1,6 @@
-// src/pages/About.jsx
-import './About.css';
+
 import { useNavigate } from 'react-router-dom';
+import './About.css';
 
 export default function About() {
   const navigate = useNavigate();

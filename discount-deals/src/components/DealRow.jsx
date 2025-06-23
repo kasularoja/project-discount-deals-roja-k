@@ -1,4 +1,4 @@
-import { DealRow } from './DealRow';
+
 
 export default function DealRow({ deal, role, isFavorite, addToFavorites }) {
   return (

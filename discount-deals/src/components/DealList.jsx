@@ -1,4 +1,4 @@
-import { DealList } from './DealList';
+
 import DealRow from './DealRow'; // Import reusable component
 import './DealList.css';
 

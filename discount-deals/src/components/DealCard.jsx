@@ -1,4 +1,4 @@
-import { DealCard } from './DealCard';
+
 import './DealList.css'; // or use DealCard.css if you'd like to separate styles
 
 export default function DealCard({ deal, onFavorite, isFavorite, showButton }) {
